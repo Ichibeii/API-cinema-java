@@ -1,5 +1,6 @@
 package com.leandro.cinema.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public class Cadeira {
 	@Column(nullable = false)
 	private Boolean disponivel;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private Pessoa pessoa;
 	
 	@ManyToOne
