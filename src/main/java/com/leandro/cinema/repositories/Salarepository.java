@@ -6,4 +6,5 @@ import com.leandro.cinema.entities.Sala;
 
 public interface Salarepository extends JpaRepository<Sala, Long> {
 
+	
 }

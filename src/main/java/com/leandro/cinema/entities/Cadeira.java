@@ -12,31 +12,30 @@ import jakarta.persistence.ManyToOne;
 public class Cadeira {
 
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false, unique = true)
 	private String identificacao;
-	
+
 	@Column(nullable = false)
 	private Boolean disponivel;
-	
+
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private Pessoa pessoa;
-	
+
 	@ManyToOne
-	private Sessao sessao;
-	
-	public Cadeira () {
-		
+	private Sala sala;
+
+	public Cadeira() {
 	}
-	
-	public Cadeira (Long id, String identificacao, Boolean disponivel, Pessoa pessoa, Sessao sessao) {
+
+	public Cadeira(Long id, String identificacao, Boolean disponivel, Pessoa pessoa, Sala sala) {
 		this.id = id;
 		this.identificacao = identificacao;
 		this.disponivel = disponivel;
 		this.pessoa = pessoa;
-		this.sessao = sessao;
+		this.sala = sala;
 	}
 
 	public Long getId() {
@@ -71,13 +70,11 @@ public class Cadeira {
 		this.pessoa = pessoa;
 	}
 
-	public Sessao getSessao() {
-		return sessao;
+	public Sala getSala() {
+		return sala;
 	}
 
-	public void setSessao(Sessao sessao) {
-		this.sessao = sessao;
+	public void setSala(Sala sala) {
+		this.sala = sala;
 	}
-	
-	
 }

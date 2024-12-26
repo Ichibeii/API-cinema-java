@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.leandro.cinema.entities.Cadeira;
+import com.leandro.cinema.entities.Sala;
+import com.leandro.cinema.repositories.Salarepository;
 import com.leandro.cinema.services.Cadeiraservices;
 
 @RestController
@@ -24,12 +26,22 @@ public class Cadeiracontroller {
 	@Autowired
 	Cadeiraservices cadeiraservices;
 	
+	@Autowired
+	Salarepository salarepository;
 	
-	@PostMapping("/cadeiras")
-	public ResponseEntity<Cadeira> criarCadeira(@RequestBody Cadeira cadeira) {
-		Cadeira cadeiraSalva = cadeiraservices.salvarCadeira(cadeira);
-		return ResponseEntity.ok(cadeiraSalva);
+	
+	@PostMapping("/salas/{salaId}/cadeiras")
+	public ResponseEntity<List<Cadeira>> adicionarCadeirasASala(@PathVariable Long salaId) {
+	    Sala sala = salarepository.findById(salaId)
+	        .orElseThrow(() -> new RuntimeException("Sala não encontrada!"));
+
+	    List<Cadeira> cadeiras = cadeiraservices.gerarCadeirasPorSala(sala);
+	    sala.setCadeiras(cadeiras);
+	    salarepository.save(sala);
+	    
+	    return ResponseEntity.ok(cadeiras);
 	}
+
 	
 	@GetMapping ("/listar/cadeiras")
     public ResponseEntity<List<Cadeira>> listarCadeiras() {

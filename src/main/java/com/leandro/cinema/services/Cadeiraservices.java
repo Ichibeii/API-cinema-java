@@ -1,5 +1,6 @@
 package com.leandro.cinema.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,13 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.leandro.cinema.entities.Cadeira;
+import com.leandro.cinema.entities.Sala;
 import com.leandro.cinema.repositories.Cadeirarepository;
+import com.leandro.cinema.repositories.Salarepository;
 
 @Service
 public class Cadeiraservices {
 
 	@Autowired
 	Cadeirarepository cadeirarepository;
+
+	@Autowired
+	Salarepository salarepository;
 
 	public Cadeira salvarCadeira(Cadeira cadeira) {
 		return cadeirarepository.save(cadeira);
@@ -39,6 +45,30 @@ public class Cadeiraservices {
 			throw new RuntimeException("Cadeira com id não encontrada");
 		}
 		cadeirarepository.deleteById(id);
+	}
+
+	public List<Cadeira> gerarCadeirasPorSala(Sala sala) {
+		List<Cadeira> cadeiras = new ArrayList<>();
+		String[] fileiras = { "A", "B", "C" };
+		int numCadeirasPorFileira = 10;
+
+		for (String fileira : fileiras) {
+			for (int i = 1; i <= numCadeirasPorFileira; i++) {
+				String identificacao = fileira + i;
+				Cadeira cadeira = new Cadeira();
+				cadeira.setIdentificacao(identificacao);
+				cadeira.setDisponivel(true);
+				cadeira.setSala(sala);
+				cadeiras.add(cadeira);
+			}
+		}
+		return cadeiras;
+	}
+
+	public Sala salvarSala(Sala sala) {
+		List<Cadeira> cadeiras = this.gerarCadeirasPorSala(sala);
+		sala.setCadeiras(cadeiras);
+		return salarepository.save(sala);
 	}
 
 }

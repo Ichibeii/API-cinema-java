@@ -1,7 +1,10 @@
 package com.leandro.cinema.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +20,16 @@ public class Reservarcadeiracontroller {
 	@Autowired
 	private ReservarcadeiraServices reservarcadeiraServices;
 
-	@PostMapping("/cadeiras/{cadeiraId}/pessoas/{pessoaId}")
-	public ResponseEntity<Cadeira> reservarCadeira(@PathVariable Long cadeiraId, @PathVariable Long pessoaId) {
-		Cadeira cadeiraReservada = reservarcadeiraServices.reservarCadeira(cadeiraId, pessoaId);
-		return ResponseEntity.ok(cadeiraReservada);
+	 @PostMapping("/cadeiras/{cadeiraId}/pessoas/{pessoaId}")
+	    public ResponseEntity<Cadeira> reservarCadeira(@PathVariable Long cadeiraId, @PathVariable Long pessoaId) {
+	        
+	        Cadeira cadeiraReservada = reservarcadeiraServices.reservarCadeira(cadeiraId, pessoaId);
+	        return ResponseEntity.ok(cadeiraReservada);
+	    }
+
+	    @GetMapping("/cadeiras")
+	    public ResponseEntity<List<Cadeira>> listarCadeiras() {
+	        List<Cadeira> cadeiras = reservarcadeiraServices.listarCadeiras();
+	        return ResponseEntity.ok(cadeiras);
+	    }
 	}
-}

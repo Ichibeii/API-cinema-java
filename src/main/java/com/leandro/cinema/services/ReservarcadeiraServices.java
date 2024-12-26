@@ -1,5 +1,7 @@
 package com.leandro.cinema.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,24 +22,31 @@ public class ReservarcadeiraServices {
 	Pessoarepository pessoarepository;
 
 	@Transactional
-    public Cadeira reservarCadeira(Long cadeiraId, Long pessoaId) {
-        // Buscar cadeira pelo ID
-        Cadeira cadeira = cadeirarepository.findById(cadeiraId)
-                .orElseThrow(() -> new RuntimeException("Cadeira não encontrada!"));
+	public Cadeira reservarCadeira(Long cadeiraId, Long pessoaId) {
 
-        // Verificar se a cadeira está disponível
-        if (!cadeira.getDisponivel()) {
-            throw new RuntimeException("Cadeira já reservada!");
-        }
+		Cadeira cadeira = cadeirarepository.findById(cadeiraId)
+				.orElseThrow(() -> new RuntimeException("Cadeira não encontrada!"));
 
-        // Buscar pessoa pelo ID
-        Pessoa pessoa = pessoarepository.findById(pessoaId)
-                .orElseThrow(() -> new RuntimeException("Pessoa não encontrada!"));
+		if (!cadeira.getDisponivel()) {
+			throw new RuntimeException("Cadeira já reservada!");
+		}
 
-        // Atualizar a disponibilidade e associar à pessoa
-        cadeira.setDisponivel(false);
-        cadeira.setPessoa(pessoa); // Supondo que exista o campo `pessoa` em `Cadeira`
+		Pessoa pessoa = pessoarepository.findById(pessoaId)
+				.orElseThrow(() -> new RuntimeException("Pessoa não encontrada!"));
 
-        return cadeirarepository.save(cadeira);
+		cadeira.setDisponivel(false);
+		cadeira.setPessoa(pessoa);
+
+		return cadeirarepository.save(cadeira);
+		
+	}
+
+	public List<Cadeira> listarCadeirasPorSessao(Long sessaoId) {
+
+		return null;
+	}
+
+	public List<Cadeira> listarCadeiras() {
+        return cadeirarepository.findAll();
     }
 }

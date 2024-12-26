@@ -25,12 +25,21 @@ public class Salacontroller {
 	@Autowired
 	Salaservices salaservices;
 	
+	//Criar sala em unidades
 	
 	 @PostMapping ("/salas")
 	    public ResponseEntity<Sala> criarSala(@RequestBody Sala sala) {
 	        Sala salaSalva = salaservices.salvarSala(sala);
 	        return ResponseEntity.ok(salaSalva);
 	    }
+	 // já cria uma lista de salas
+	 
+	 @PostMapping("/salas/lotes")
+	 public ResponseEntity<List<Sala>> criarSalasLotes(@RequestBody List<Sala> sala) {
+	     List<Sala> salasSalvas = salaservices.salvarSalasLotes(sala);
+	     return ResponseEntity.ok(salasSalvas);
+	 }
+
 
 	    @GetMapping ("/listar/salas")
 	    public ResponseEntity<List<Sala>> listarSalas() {

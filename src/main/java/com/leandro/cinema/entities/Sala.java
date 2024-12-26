@@ -21,16 +21,16 @@ public class Sala {
 	private String nome;
 
 	@OneToMany(mappedBy = "sala", cascade = CascadeType.ALL)
-	private List<Sessao> sessoes;
+	private List<Cadeira> cadeiras;
 
 	public Sala() {
 
 	}
 
-	public Sala(Long id, String nome, List<Sessao> sessoes) {
+	public Sala(Long id, String nome, List<Cadeira> cadeiras) {
 		this.id = id;
 		this.nome = nome;
-		this.sessoes = sessoes;
+		this.cadeiras = cadeiras;
 	}
 
 	public Long getId() {
@@ -49,11 +49,12 @@ public class Sala {
 		this.nome = nome;
 	}
 
-	public List<Sessao> getSessoes() {
-		return sessoes;
+	public List<Cadeira> getCadeiras() {
+		return cadeiras;
 	}
 
-	public void setSessoes(List<Sessao> sessoes) {
-		this.sessoes = sessoes;
+	public void setCadeiras(List<Cadeira> cadeiras) {
+		this.cadeiras = cadeiras;
 	}
+
 }

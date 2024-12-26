@@ -34,5 +34,10 @@ public class Salaservices {
 			}
 			salarepository.deleteById(id);
 		}
+	    
+	    public List<Sala> salvarSalasLotes(List<Sala> salas) {
+	        return salarepository.saveAll(salas);
+	    }
+
 	}
 
